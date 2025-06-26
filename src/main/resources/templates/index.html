@@ -1,133 +1,236 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de contactos</title>
+    <title>Página Principal - Agenda</title>
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/agenda_icono.png" type="image/png">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>
+
 </head>
+
 <body>
-<div class="container mt-4">
-    <div class="row">
-        <h1>Listado de Contactos</h1>
-    </div>
+    <header class="p-3"></header>
+    <nav class="navbar navbar-expand-lg custom-navbar">
+        <div class="container-fluid" style="display: flex; justify-content: center;">
+            <img src="assets/agenda_navtitle.png" width="340" class="justify-content-center">
+        </div>
+    </nav>
 
-    <div class="row mb-3">
-        <div class="col-lg-3">
-            <a th:href="@{/nuevo}" class="btn btn-primary btn-sm">Agregar contacto</a>
+    <div class="container my-5">
+        <div id="carouselExampleCaptions" class="carousel slide">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="assets/pink_phone_slide.jpg" class="d-block w-100" alt="Pinkphone_img"
+                        style="max-height: 200px; object-fit: cover;">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h3>Accedé fácilmente a tu agenda</h3>
+                        <p>Te mostramos una lista de todos tus contactos.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="assets/pink_notebook_slide.jpg" class="d-block w-100" alt="notebook_img"
+                        style="max-height: 200px; object-fit: cover;">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Guardá la información de tus contactos</h5>
+                        <p>Agregá un contacto nuevo a través del botón "agregar" y completá el formulario.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="assets/tags_slide.png" class="d-block w-100" alt="tags_img"
+                        style="max-height: 200px; object-fit: cover;">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Identificá a tus contactos como más te guste</h5>
+                        <p>Ahora podés asignarle etiquetas a tus contactos.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
     </div>
 
-    <table class="table table-striped table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Email</th>
-            <th>Celular</th>
-            <th>Etiqueta</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="contacto : ${contactos}">
-            <td th:text="${contacto.nombre}">Nombre</td>
-            <td th:text="${contacto.apellido}">Apellido</td>
-            <td th:text="${contacto.email}">Email</td>
-            <td th:text="${contacto.celular}">Celular</td>
-            <td th:text="${contacto.etiqueta != null ? contacto.etiqueta.nombreEtiqueta : 'Sin etiqueta'}">Etiqueta</td>
-            <td>
-                <a th:href="@{/modificar/{id}(id=${contacto.id})}" class="btn btn-info btn-sm">Modificar</a>
-                <a href="javascript:void(0)" th:onclick="'eliminar(' + ${contacto.id} + ')'" class="btn btn-danger btn-sm">Eliminar</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-
-
-<hr>
-<div class="container mt-4">
-    <div class="row">
-        <h1>Listado de Etiquetas</h1>
-    </div>
-
-    <div class="row mb-3">
-        <div class="col-lg-3">
-            <a th:href="@{/etiqueta/nueva}" class="btn btn-primary btn-sm">Agregar etiqueta</a>
+    <div class="container p-5">
+        <div class="row">
+            <div class="col-md-3 d-flex justify-content-center">
+                <div class="card" style="width: 18rem;">
+                    <img src="assets/notebook_card.jpg" class="card-img-top opacity-50" alt="imagen_Agenda">
+                    <div class="card-body">
+                        <h5 class="card-title">Agenda</h5>
+                        <p class="card-text">Acceda a la lista de contactos.</p>
+                        <a href="#infoContactos" class="btn btn-danger">Ver agenda</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex justify-content-center">
+                <div class="card" style="width: 18rem;">
+                    <img src="assets/phone_card.jpg" class="card-img-top opacity-50" alt="imagen_etiquetas">
+                    <div class="card-body">
+                        <h5 class="card-title">Nuevo contacto</h5>
+                        <p class="card-text">Agregue nuevos contactos.</p>
+                        <a th:href="@{/nuevo}" class="btn btn-danger">Agregar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex justify-content-center">
+                <div class="card" style="width: 18rem;">
+                    <img src="assets/stacked_tags_card.jpg" class="card-img-top opacity-50" alt="tags_img">
+                    <div class="card-body">
+                        <h5 class="card-title">Etiquetas</h5>
+                        <p class="card-text">Acceda a la lista de etiquetas.</p>
+                        <a href="#infoEtiquetas" class="btn btn-danger">Ver etiquetas</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex justify-content-center">
+                <div class="card" style="width: 18rem;">
+                    <img src="assets/tags_card.jpg" class="card-img-top opacity-50" alt="tags_img">
+                    <div class="card-body">
+                        <h5 class="card-title">Nueva etiqueta</h5>
+                        <p class="card-text">Agregue nuevas etiquetas.</p>
+                        <a th:href="@{/etiqueta/nueva}" class="btn btn-danger">Agregar</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    </div>
 
-    <table class="table table-striped table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <th>Nombre</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="etiqueta : ${listaEtiquetas}">
-            <td th:text="${etiqueta.nombreEtiqueta}"></td>
-            <td>
-                <a href="javascript:void(0)" th:onclick="'eliminarEtiqueta(' + ${etiqueta.id} + ')'" class="btn btn-danger btn-sm">Eliminar</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+    <div class="container mt-4" id="infoContactos">
+        <div class="row">
+            <h1>Listado de Contactos</h1>
+        </div>
+
+        <table class="table">
+            <thead class="table">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Celular</th>
+                    <th>Etiqueta</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="contacto : ${contactos}">
+                    <td th:text="${contacto.nombre}">Nombre</td>
+                    <td th:text="${contacto.apellido}">Apellido</td>
+                    <td th:text="${contacto.email}">Email</td>
+                    <td th:text="${contacto.celular}">Celular</td>
+                    <td th:text="${contacto.etiqueta != null ? contacto.etiqueta.nombreEtiqueta : 'Sin etiqueta'}">
+                        Etiqueta</td>
+                    <td>
+                        <a th:href="@{/modificar/{id}(id=${contacto.id})}" class="btn btn-outline-danger">Modificar</a>
+                        <a href="javascript:void(0)" th:onclick="'eliminar(' + ${contacto.id} + ')'"
+                            class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 
-<!-- SweetAlert & jQuery -->
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
-<script>
-    function eliminar(id) {
-        swal({
-            title: "¿Está seguro de eliminar?",
-            text: "Una vez eliminado, no se podrá recuperar.",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        }).then((OK) => {
-            if (OK) {
-                $.ajax({
-                    url: "/contacto/" + id,
-                    success: function (res) {
-                        console.log("Contacto eliminado:", res);
-                        location.href = "/";
-                    }
-                });
-            }
-        });
-    }
-</script>
+    <div class="container mt-4" id="infoEtiquetas">
+        <div class="row">
+            <h1>Listado de Etiquetas</h1>
+        </div>
 
-<script>
-    function eliminarEtiqueta(id) {
-        console.log(id);
-        swal({
-            title: "¿Está seguro de eliminar?",
-            text: "Una vez eliminado, no se podrá recuperar.",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        }).then((OK) => {
-            if (OK) {
-                $.ajax({
-                    url: "/etiqueta/" + id,
-                    success: function (res) {
-                        console.log("Etiqueta eliminada:", res);
-                        location.href = "/";
-                    }
-                });
-            }
-        });
-    }
-</script>
+        <table class="table">
+            <thead class="table">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="etiqueta : ${listaEtiquetas}">
+                    <td th:text="${etiqueta.nombreEtiqueta}"></td>
+                    <td>
+                        <a href="javascript:void(0)" th:onclick="'eliminarEtiqueta(' + ${etiqueta.id} + ')'"
+                            class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SweetAlert & jQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+        function eliminar(id) {
+            swal({
+                title: "¿Está seguro de eliminar?",
+                text: "Una vez eliminado, no se podrá recuperar.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((OK) => {
+                if (OK) {
+                    $.ajax({
+                        url: "/contacto/" + id,
+                        success: function (res) {
+                            console.log("Contacto eliminado:", res);
+                            location.href = "/";
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function eliminarEtiqueta(id) {
+            console.log(id);
+            swal({
+                title: "¿Está seguro de eliminar?",
+                text: "Una vez eliminado, no se podrá recuperar.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((OK) => {
+                if (OK) {
+                    $.ajax({
+                        url: "/etiqueta/" + id,
+                        success: function (res) {
+                            console.log("Etiqueta eliminada:", res);
+                            location.href = "/";
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+
+    <footer>&copy; 2025 Maldonado María Agustina</footer>
+
 
 </body>
+
 </html>
